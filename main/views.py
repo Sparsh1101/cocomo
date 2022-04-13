@@ -58,10 +58,10 @@ def register(request):
 
 
 def login(request):
-    form = forms.LoginForm()
+    form = LoginForm()
     message = ""
     if request.method == "POST":
-        form = forms.LoginForm(request.POST)
+        form = LoginForm(request.POST)
         if form.is_valid():
             user = authenticate(
                 request,
