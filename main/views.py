@@ -137,6 +137,7 @@ def login(request):
                 password=form.cleaned_data["password"],
             )
             if user is not None:
+                auth_login(request, user)
                 return redirect("main:index")
             else:
                 message = "Username or Password is incorrect"
