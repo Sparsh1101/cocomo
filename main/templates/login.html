@@ -1,4 +1,5 @@
 {% load static %}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -16,11 +17,15 @@
               rel="stylesheet">
         <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
         <style>
-          .reg-log {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          }
+            form {
+                width: 30%;
+            }
+            .con {
+                min-height: 89vh;
+            }
+            h5 {
+                text-align: center;
+            }
         </style>
         {% block links %}{% endblock %}
     </head>
@@ -55,27 +60,24 @@
             <div id="message">
                 {% if message %}<div class="mb-3 alert alert-danger" role="alert">{{ message }}</div>{% endif %}
             </div>
-            <div class="d-flex align-items-center justify-content-center"
-                 style="margin-top: 150px;">
-                <div class="card" style="width: 30rem;">
-                    <form method="post">
-                        {% csrf_token %}
-                        <h2 class="text-center" style="margin:0 0 22px 0;">LOGIN</h2>
-                        <div style="margin-bottom:14px;" class="row">
-                            <label>Username</label>
-                            {{ form.username }}
-                        </div>
-                        <div style="margin-bottom:14px;" class="row">
-                            <label>Password</label>
-                            {{ form.password }}
-                        </div>
-                        <div class="mt-4 d-flex">
-                            <div style="padding-right:6px;">
-                                <input type="submit" value="Login" class="btn btn-primary btnmedium">
+            <div class="con d-flex justify-content-center align-items-center my-3">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="d-flex flex-column card p-4">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Login</h5>
+                            <div class="col-md-12 mb-4">
+                                {{ form.username|as_crispy_field }}
+                            </div>
+                            <div class="col-md-12 mb-4">
+                                {{ form.password|as_crispy_field }}
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <input type="submit" class="btn btn-primary btnmedium" value="Submit">
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         {% endblock %}
         <!-- Footer -->

@@ -16,6 +16,17 @@
         <link href="{% static 'bootstrap/css/bootstrap.min.css' %}"
               rel="stylesheet">
         <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+        <style>
+            form {
+                width: 30%;
+            }
+            .con {
+                min-height: 89vh;
+            }
+            h5 {
+                text-align: center;
+            }
+        </style>
         {% block links %}{% endblock %}
     </head>
     <body>
@@ -46,17 +57,153 @@
                     </div>
                 </div>
             </nav>
-            <form method="POST" enctype="multipart/form-data">
-                {{form.media}}
-                {% csrf_token %}
-                <div class="col-md-12">
-                    <input type="file" name="files" id="ctrl" webkitdirectory directory multiple/>
-                </div>
-                <div class="d-flex justify-content-center">
-                    <input type="submit" class="btn btn-primary btnmedium" value="Submit">
-                </div>
-            </form>
-        {% endblock %}
-        <!-- Footer -->
-    </body>
+            <div class="con d-flex justify-content-center align-items-center my-3">
+                <form method="POST" enctype="multipart/form-data">
+                    {{ form.media }}
+                    {% csrf_token %}
+                    <div class="d-flex flex-column card p-4">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Cocomo Model</h5>
+                            <div class="col-md-12 mb-4">
+                                <label for="time" class="form-label">Time (Hrs)</label>
+                                {% if timeError != "" %}
+                                    <input id="time" class="form-control is-invalid" type="number" name="time" aria-describedby="timeHelp" value={{ time }}  required />
+                                {% else %}
+                                    <input id="time" class="form-control" type="number" name="time" aria-describedby="timeHelp" value={{ time }}  required />
+                                {% endif %}
+                                <div id="timeHelp" class="form-text">Enter Time in hours which you think you would require for your work.</div>
+                                <p class="invalid-feedback">
+                                    <strong>{{ timeError }}</strong>
+                                </p>
+                            </div>
+                            <div class="col-md-12 mb-4">
+                                <label for="persons" class="form-label">Number of Persons</label>
+                                {% if personsError != "" %}
+                                    <input id="persons" class="form-control is-invalid" type="number" name="persons" aria-describedby="personsHelp"  value={{ persons }}  required />
+                                {% else %}
+                                    <input id="persons" class="form-control" type="number" name="persons" aria-describedby="personsHelp" value={{ persons }}  required />
+                                {% endif %}
+                                <div id="personsHelp" class="form-text">Enter number of persons which you think you would require for your work.</div>
+                                <p class="invalid-feedback">
+                                    <strong>{{ personsError }}</strong>
+                                </p>
+                            </div>
+                            <div class="col-md-12 mb-4">
+                                <label for="files" class="form-label">Upload Code Folder</label>
+                                {% if filesError != "" %}
+                                    <input id="files"
+                                           class="is-invalid form-control"
+                                           type="file"
+                                           name="files"
+                                           aria-describedby="filesHelp"
+                                           webkitdirectory
+                                           directory
+                                           multiple
+                                           required />
+                                {% else %}
+                                    <input id="files"
+                                           class="form-control"
+                                           type="file"
+                                           name="files"
+                                           aria-describedby="filesHelp"
+                                           webkitdirectory
+                                           directory
+                                           multiple
+                                           required />
+                                {% endif %}
+                                <div id="filesHelp" class="form-text">
+                                    Upload your entire workspace directory and we will count the lines of code for you.
+                                </div>
+                                <p class="invalid-feedback">
+                                    <strong>{{ filesError }}</strong>
+                                </p>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <input type="submit" class="btn btn-primary btnmedium" value="Submit">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <input type="hidden" id="myVar" name="variable" value="{{ show_result }}">
+            <!-- Button trigger modal -->
+            <button type="button"
+                    id="toggle-button"
+                    class="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#myModal"
+                    style="display: none;">
+                Launch demo modal
+            </button>
+            <!-- Modal -->
+            <div class="modal fade"
+                 id="myModal"
+                 tabindex="-1"
+                 aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="myModalLabel">Result</h5>
+                            <button type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Predicted</th>
+                                        <th scope="col">Actual (Cocomo)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Time</th>
+                                        <td>{{ time }}</td>
+                                        <td>{{ result.1 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Number of Persons</th>
+                                        <td>
+                                            {{ persons }}
+                                        </td>
+                                        <td>
+                                            {{ result.2 }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p>
+                                <b>LOC: </b>{{ result.0 }}
+                        </p>
+                        <p>
+                            <b>Time Efficiency: </b>{{ result.3 }}
+                    </p>
+                    <p>
+                        <b>Persons Efficiency: </b>{{ result.4 }}
+                </p>
+                <p style="color: red; text-align: center;">
+                    <b>{{ message }}</b>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+<!-- Footer -->
+<script type="text/javascript">
+            var check = document.getElementById("myVar").value;
+            if (check == 'True') {
+                document.getElementById('toggle-button').click();
+            }
+</script>
+</body>
 </html>

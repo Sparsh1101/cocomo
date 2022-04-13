@@ -6,35 +6,103 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from .forms import *
 from django.http import HttpResponse
-import os
+import shutil
 from django.conf import settings
 # from .logic import processor
 
+
 @login_required(login_url="main:login")
 def index(request):
-    if request.method == 'POST':
+    timeError = personsError = ""
+    if request.method == "POST":
         form = UploadFolderForm(request.POST, request.FILES)
-        files = request.FILES.getlist('files')
+        files = request.FILES.getlist("files")
+        time = request.POST["time"]
+        persons = request.POST["persons"]
+        error = False
+        if not request.POST["time"]:
+            timeError = "Cannot Be Empty"
+            error = True
+        elif int(time) <= 0:
+            timeError = "Time must be greater than zero"
+            error = True
 
+        if not request.POST["persons"]:
+            personsError = "Cannot Be Empty"
+            error = True   
+        elif int(persons) <= 0:
+            personsError = "Number of Persons must be greater than zero"
+            error = True
         if form.is_valid():
-            for f in files:
-                file_instance = UploadFolder(files=f)
-                file_instance.user = request.user
-                file_instance.save()
-            # result = processor(request.user.username, time, persons)
-            # [loc, cocomo_time, cocomo_persons, time_efficiency, persons_efficiency]
-            to_delete = UploadFolder.objects.filter(
-                user = request.user
-            ).delete()
-            os.remove(settings.MEDIA_ROOT + "/" + request.user.username)
-            html = "<html><body>Success</body></html>"
-            return HttpResponse(html)
+            if error == True:
+                return render(
+                    request,
+                    "index.html",
+                    {
+                        "form": form,
+                        "show_result": False,
+                        "timeError": timeError,
+                        "personsError": personsError,
+                        "filesError": "",
+                        "time": time,
+                        "persons": persons,
+                    },
+                )
+            else:
+                for f in files:
+                    file_instance = UploadFolder(files=f)
+                    file_instance.user = request.user
+                    file_instance.save()
+                # result = processor(request.user.username, time, persons)
+                # [loc, cocomo_time, cocomo_persons, time_efficiency, persons_efficiency]
+                message = "This is the message"
+                result = [1, 2, 3, 4, 5]
+                UploadFolder.objects.filter(user=request.user).delete()
+                shutil.rmtree(settings.MEDIA_ROOT + "/" + request.user.username)
+                return render(
+                    request,
+                    "index.html",
+                    {
+                        "form": form,
+                        "result": result,
+                        "show_result": True,
+                        "timeError": timeError,
+                        "personsError": personsError,
+                        "message": message,
+                        "filesError": "",
+                        "time": time,
+                        "persons": persons,
+                    },
+                )
         else:
-            form = UploadFolderForm()
-            return render(request, "index.html", {'form': form})
+            return render(
+                request,
+                "index.html",
+                {
+                    "form": form,
+                    "show_result": False,
+                    "timeError": timeError,
+                    "personsError": personsError,
+                    "filesError": "Cannot be Empty",
+                    "time": time,
+                    "persons": time,
+                },
+            )
     else:
         form = UploadFolderForm()
-        return render(request, "index.html", {'form': form})
+        return render(
+            request,
+            "index.html",
+            {
+                "form": form,
+                "show_result": False,
+                "timeError": timeError,
+                "personsError": personsError,
+                "filesError": "",
+                "time": 0,
+                "persons": 0,
+            },
+        )
 
 
 def register(request):
@@ -68,18 +136,17 @@ def login(request):
                 username=form.cleaned_data["username"],
                 password=form.cleaned_data["password"],
             )
-            auth_login(request, user)
             if user is not None:
                 return redirect("main:index")
             else:
-                message = "User Access Denied!"
+                message = "Username or Password is incorrect"
                 return render(
                     request,
                     "login.html",
                     context={"form": form, "message": message},
                 )
         else:
-            return redirect("main:index")
+            return redirect("main:login")
     else:
         return render(request, "login.html", context={"form": form, "message": message})
 

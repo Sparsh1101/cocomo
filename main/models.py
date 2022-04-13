@@ -9,4 +9,4 @@ def rename(instance, filename):
 
 class UploadFolder(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    files = models.FileField(upload_to=rename, blank=True, null=True)
+    files = models.FileField(upload_to=rename)
