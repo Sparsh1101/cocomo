@@ -52,6 +52,9 @@
                         </div>
                         <div class="navbar-nav">
                             <a class="nav-link" aria-current="page" href="#">Hi, {{ request.user }}</a>
+                            {% if isSuperUser %}
+                                <a class="nav-link" aria-current="page" href="/register">Register</a>
+                            {% endif %}
                             <a class="nav-link" aria-current="page" href="/logout">Logout</a>
                         </div>
                     </div>
