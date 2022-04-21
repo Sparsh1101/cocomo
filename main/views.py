@@ -1,3 +1,4 @@
+from platform import processor
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, logout
 from django.contrib.auth import login as auth_login
@@ -8,10 +9,12 @@ from .forms import *
 from django.http import HttpResponse
 import shutil
 from django.conf import settings
-# from .logic import processor
+from .logic import processor
+
 
 def is_admin(user):
     return user.is_superuser
+
 
 @login_required(login_url="main:login")
 def index(request):
@@ -33,12 +36,12 @@ def index(request):
 
         if not request.POST["persons"]:
             personsError = "Cannot Be Empty"
-            error = True   
+            error = True
         elif int(persons) <= 0:
             personsError = "Number of Persons must be greater than zero"
             error = True
 
-        if request.POST["modelType"] == 'select':
+        if request.POST["modelType"] == "select":
             modelTypeError = "Please select a valid modelType"
             error = True
 
@@ -65,8 +68,17 @@ def index(request):
                     file_instance = UploadFolder(files=f)
                     file_instance.user = request.user
                     file_instance.save()
-                # result = processor(request.user.username, time, persons, modelType)
-                # [loc, cocomo_time, cocomo_persons, time_efficiency, persons_efficiency]
+
+                # result = processor(request.user.username, <software_project_type>, time, persons) # Insert software_project_type input received from user
+                # You can print something on these lines for the message part:
+
+                # As per the results of cocomo basic model the time alloted on the project could have been improved by time_efficiency %,
+                # the number of person hired for the project could have been improved by efficiency_persons %
+
+                # My recommendation would be to bold the percentages and stuff to make it look good
+                # Rest the UI is under you, quite a lot of effort has been put behind the logic
+                # please make the UI equally worth it
+
                 message = "This is the message"
                 result = [1, 2, 3, 4, 5]
                 UploadFolder.objects.filter(user=request.user).delete()
@@ -87,7 +99,6 @@ def index(request):
                         "persons": persons,
                         "modelType": modelType,
                         "isSuperUser": isSuperUser,
-                        
                     },
                 )
         else:
@@ -121,10 +132,11 @@ def index(request):
                 "filesError": "",
                 "time": 0,
                 "persons": 0,
-                "modelType": 'select',
+                "modelType": "select",
                 "isSuperUser": isSuperUser,
             },
         )
+
 
 @user_passes_test(
     lambda user: is_admin(user),
