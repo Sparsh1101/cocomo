@@ -16,12 +16,13 @@ def is_admin(user):
 @login_required(login_url="main:login")
 def index(request):
     isSuperUser = is_admin(request.user)
-    timeError = personsError = ""
+    timeError = personsError = modelTypeError = ""
     if request.method == "POST":
         form = UploadFolderForm(request.POST, request.FILES)
         files = request.FILES.getlist("files")
         time = request.POST["time"]
         persons = request.POST["persons"]
+        modelType = request.POST["modelType"]
         error = False
         if not request.POST["time"]:
             timeError = "Cannot Be Empty"
@@ -36,6 +37,11 @@ def index(request):
         elif int(persons) <= 0:
             personsError = "Number of Persons must be greater than zero"
             error = True
+
+        if request.POST["modelType"] == 'select':
+            modelTypeError = "Please select a valid modelType"
+            error = True
+
         if form.is_valid():
             if error == True:
                 return render(
@@ -45,10 +51,12 @@ def index(request):
                         "form": form,
                         "show_result": False,
                         "timeError": timeError,
+                        "modelTypeError": modelTypeError,
                         "personsError": personsError,
                         "filesError": "",
                         "time": time,
                         "persons": persons,
+                        "modelType": modelType,
                         "isSuperUser": isSuperUser,
                     },
                 )
@@ -57,7 +65,7 @@ def index(request):
                     file_instance = UploadFolder(files=f)
                     file_instance.user = request.user
                     file_instance.save()
-                # result = processor(request.user.username, time, persons)
+                # result = processor(request.user.username, time, persons, modelType)
                 # [loc, cocomo_time, cocomo_persons, time_efficiency, persons_efficiency]
                 message = "This is the message"
                 result = [1, 2, 3, 4, 5]
@@ -72,11 +80,14 @@ def index(request):
                         "show_result": True,
                         "timeError": timeError,
                         "personsError": personsError,
+                        "modelTypeError": modelTypeError,
                         "message": message,
                         "filesError": "",
                         "time": time,
                         "persons": persons,
+                        "modelType": modelType,
                         "isSuperUser": isSuperUser,
+                        
                     },
                 )
         else:
@@ -88,9 +99,11 @@ def index(request):
                     "show_result": False,
                     "timeError": timeError,
                     "personsError": personsError,
+                    "modelTypeError": modelTypeError,
                     "filesError": "Cannot be Empty",
                     "time": time,
                     "persons": time,
+                    "modelType": modelType,
                     "isSuperUser": isSuperUser,
                 },
             )
@@ -104,9 +117,11 @@ def index(request):
                 "show_result": False,
                 "timeError": timeError,
                 "personsError": personsError,
+                "modelTypeError": modelTypeError,
                 "filesError": "",
                 "time": 0,
                 "persons": 0,
+                "modelType": 'select',
                 "isSuperUser": isSuperUser,
             },
         )

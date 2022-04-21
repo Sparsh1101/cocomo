@@ -68,6 +68,40 @@
                         <div class="card-body">
                             <h5 class="card-title mb-4">Cocomo Model</h5>
                             <div class="col-md-12 mb-4">
+                                <label for="modelType" class="form-label">Type of Cocomo Model</label>
+                                {% if modelTypeError == "" %}
+                                    <select name="modelType" id="modelType" class="form-select" aria-describedby="modelTypeHelp">
+                                        <option value="select">Select</option>
+                                        {% if modelType == "organic" %}
+                                            <option value="organic" selected>Organic</option>
+                                        {% else %}
+                                            <option value="organic">Organic</option>
+                                        {% endif %}
+                                        {% if modelType == "semidetached" %}
+                                            <option value="semidetached" selected>Semi Detached</option>
+                                        {% else %}
+                                        <option value="semidetached">Semi Detached</option>
+                                        {% endif %}
+                                        {% if modelType == "embedded" %}
+                                            <option value="embedded" selected>Embedded</option>
+                                        {% else %}
+                                            <option value="embedded">Embedded</option>
+                                        {% endif %}
+                                    </select>
+                                {% else %}
+                                    <select name="modelType" id="modelType" class="form-select is-invalid" aria-describedby="modelTypeHelp">
+                                        <option value="select" selected>Select</option>
+                                        <option value="organic">Organic</option>
+                                        <option value="semidetached">Semi Detached</option>
+                                        <option value="embedded">Embedded</option>
+                                    </select>
+                                {% endif %}
+                                <div id="modelTypeHelp" class="form-text">Enter type of Basic Cocomo Model you have used for your work.</div>
+                                <p class="invalid-feedback">
+                                    <strong>{{ modelTypeError }}</strong>
+                                </p>
+                            </div>
+                            <div class="col-md-12 mb-4">
                                 <label for="time" class="form-label">Time (Hrs)</label>
                                 {% if timeError != "" %}
                                     <input id="time" class="form-control is-invalid" type="number" name="time" aria-describedby="timeHelp" value={{ time }}  required />
