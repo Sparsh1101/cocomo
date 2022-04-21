@@ -56,21 +56,24 @@
                     </div>
                 </div>
             </nav>
-            <div id="message">
-                {% if message %}<div class="mb-3 alert alert-danger" role="alert">{{ message }}</div>{% endif %}
-            </div>
+            {% if message %}
+                <div id="message"
+                     class="alert alert-danger alert-dismissible fade show"
+                     role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endif %}
             <div class="con d-flex justify-content-center align-items-center my-3">
                 <form method="post">
                     {% csrf_token %}
                     <div class="d-flex flex-column card p-4">
                         <div class="card-body">
                             <h5 class="card-title mb-4">Login</h5>
-                            <div class="col-md-12 mb-4">
-                                {{ form.username|as_crispy_field }}
-                            </div>
-                            <div class="col-md-12 mb-4">
-                                {{ form.password|as_crispy_field }}
-                            </div>
+                            <div class="col-md-12 mb-4">{{ form.username|as_crispy_field }}</div>
+                            <div class="col-md-12 mb-4">{{ form.password|as_crispy_field }}</div>
                             <div class="d-flex justify-content-center">
                                 <input type="submit" class="btn btn-primary btnmedium" value="Submit">
                             </div>

@@ -102,13 +102,13 @@
                                 </p>
                             </div>
                             <div class="col-md-12 mb-4">
-                                <label for="time" class="form-label">Time (Hrs)</label>
+                                <label for="time" class="form-label">Time (months)</label>
                                 {% if timeError != "" %}
                                     <input id="time" class="form-control is-invalid" type="number" name="time" aria-describedby="timeHelp" value={{ time }}  required />
                                 {% else %}
                                     <input id="time" class="form-control" type="number" name="time" aria-describedby="timeHelp" value={{ time }}  required />
                                 {% endif %}
-                                <div id="timeHelp" class="form-text">Enter Time in hours which you think you would require for your work.</div>
+                                <div id="timeHelp" class="form-text">Enter Time in months which you think you would require for your work.</div>
                                 <p class="invalid-feedback">
                                     <strong>{{ timeError }}</strong>
                                 </p>
