@@ -192,8 +192,8 @@
                         <thead>
                             <tr>
                                 <th scope="col"></th>
-                                <th scope="col">Predicted</th>
-                                <th scope="col">Actual (Cocomo)</th>
+                                <th scope="col">Actual</th>
+                                <th scope="col">Suggested by COCOMO Basic Model</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -222,10 +222,9 @@
                     <p>
                         <b>Persons Efficiency: </b>{{ result.4 }}%
                     </p>
-                    <p style="color: red; text-align: center;">
-                        As per the results of basic cocomo model, the time alloted on the project could have been
-                        improved by <b>{{ result.3 }}%</b>, the number of person hired for the project could have been
-                        improved by <b>{{ result.4 }}%</b>
+                    <p style="color: red; text-align: center;">As per the results of basic cocomo model, the time
+                        alloted on the project could have been improved by <b>{{ result.3 }}%</b>, the number of person
+                        hired for the project could have been improved by <b>{{ result.4 }}%</b>
                     </p>
                 </div>
                 <div class="modal-footer">
