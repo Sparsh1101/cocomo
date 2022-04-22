@@ -2,24 +2,18 @@
 {% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>
-            {% block title %}{% endblock %}
-        </title>
-        {% comment %}
-        <link rel="icon"
-              type="image/png"
-              href="{% static 'favicon/favicon-32x32.png' %}"> {% endcomment %}
-        <link href="{% static 'fontawesome/css/all.min.css' %}"
-              rel="stylesheet"
-              type="text/css">
-        <link href="{% static 'bootstrap/css/bootstrap.min.css' %}"
-              rel="stylesheet">
-        <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-        <style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Login
+    </title>
+    <link href="{% static 'fontawesome/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <style>
         form {
             width: 30%;
         }
@@ -31,64 +25,58 @@
         h5 {
             text-align: center;
         }
-        </style>
-        {% block links %}{% endblock %}
-    </head>
-    <body>
-        <!-- Top Bar -->
-        <!-- Body -->
-        {% block body %}
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="/">Cocomo</a>
-                    <button class="navbar-toggler"
-                            type="button"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#navbarNavAltMarkup"
-                            aria-controls="navbarNavAltMarkup"
-                            aria-expanded="false"
-                            aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse justify-content-between"
-                         id="navbarNavAltMarkup">
-                        <div class="navbar-nav">
-                            <a class="nav-link" aria-current="page" href="/">Home</a>
-                        </div>
-                        <div class="navbar-nav">
-                            <a class="nav-link active" aria-current="page" href="/login">Login</a>
-                        </div>
+    </style>
+    {% block links %}{% endblock %}
+</head>
+
+<body>
+    <!-- Top Bar -->
+    <!-- Body -->
+    {% block body %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Cocomo</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link" aria-current="page" href="/">Home</a>
+                </div>
+                <div class="navbar-nav">
+                    <a class="nav-link active" aria-current="page" href="/login">Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    {% if message %}
+    {% if message %}
+    <div id="message" class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endif %}
+    {% endif %}
+    <div class="con d-flex justify-content-center align-items-center my-3">
+        <form method="post">
+            {% csrf_token %}
+            <div class="d-flex flex-column card p-4">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">Login</h5>
+                    <div class="col-md-12 mb-4">{{ form.username|as_crispy_field }}</div>
+                    <div class="col-md-12 mb-4">{{ form.password|as_crispy_field }}</div>
+                    <div class="d-flex justify-content-center">
+                        <input type="submit" class="btn btn-primary btnmedium" value="Submit">
                     </div>
                 </div>
-            </nav>
-            {% if message %}
-                {% if message %}
-                    <div id="message"
-                         class="alert alert-danger alert-dismissible fade show"
-                         role="alert">
-                        {{ message }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                {% endif %}
-            {% endif %}
-            <div class="con d-flex justify-content-center align-items-center my-3">
-                <form method="post">
-                    {% csrf_token %}
-                    <div class="d-flex flex-column card p-4">
-                        <div class="card-body">
-                            <h5 class="card-title mb-4">Login</h5>
-                            <div class="col-md-12 mb-4">{{ form.username|as_crispy_field }}</div>
-                            <div class="col-md-12 mb-4">{{ form.password|as_crispy_field }}</div>
-                            <div class="d-flex justify-content-center">
-                                <input type="submit" class="btn btn-primary btnmedium" value="Submit">
-                            </div>
-                        </div>
-                    </div>
-                </form>
             </div>
-        {% endblock %}
-        <!-- Footer -->
-    </body>
+        </form>
+    </div>
+    {% endblock %}
+    <!-- Footer -->
+</body>
+
 </html>
