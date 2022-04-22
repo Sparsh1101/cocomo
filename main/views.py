@@ -42,7 +42,7 @@ def index(request):
             error = True
 
         if request.POST["modelType"] == "select":
-            modelTypeError = "Please select a valid modelType"
+            modelTypeError = "Please select a valid Basic Cocomo Model Type"
             error = True
 
         if form.is_valid():
@@ -69,18 +69,8 @@ def index(request):
                     file_instance.user = request.user
                     file_instance.save()
 
-                # result = processor(request.user.username, <software_project_type>, time, persons) # Insert software_project_type input received from user
-                # You can print something on these lines for the message part:
-
-                # As per the results of cocomo basic model the time alloted on the project could have been improved by time_efficiency %,
-                # the number of person hired for the project could have been improved by efficiency_persons %
-
-                # My recommendation would be to bold the percentages and stuff to make it look good
-                # Rest the UI is under you, quite a lot of effort has been put behind the logic
-                # please make the UI equally worth it
-
-                message = "This is the message"
-                result = [1, 2, 3, 4, 5]
+                result = processor(request.user.username, modelType, float(time), int(persons))
+                
                 UploadFolder.objects.filter(user=request.user).delete()
                 shutil.rmtree(settings.MEDIA_ROOT + "/" + request.user.username)
                 return render(
@@ -93,7 +83,6 @@ def index(request):
                         "timeError": timeError,
                         "personsError": personsError,
                         "modelTypeError": modelTypeError,
-                        "message": message,
                         "filesError": "",
                         "time": time,
                         "persons": persons,
