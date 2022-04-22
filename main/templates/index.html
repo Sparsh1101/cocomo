@@ -189,25 +189,25 @@
                 </div>
                 <div class="modal-body">
                     <table class="table table-striped">
-                        <thead>
+                        <thead style="text-align: center;">
                             <tr>
                                 <th scope="col"></th>
                                 <th scope="col">Actual</th>
-                                <th scope="col">Suggested by COCOMO Basic Model</th>
+                                <th scope="col">COCOMO Basic Model</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <th scope="row">Time (months)</th>
-                                <td>{{ time }}</td>
-                                <td>{{ result.1|floatformat:2 }}</td>
+                                <td style="text-align: center;">{{ time }}</td>
+                                <td style="text-align: center;">{{ result.1|floatformat:2 }}</td>
                             </tr>
                             <tr>
                                 <th scope="row">Number of Persons</th>
-                                <td>
+                                <td style="text-align: center;">
                                     {{ persons }}
                                 </td>
-                                <td>
+                                <td style="text-align: center;">
                                     {{ result.2 }}
                                 </td>
                             </tr>
@@ -217,10 +217,10 @@
                         <b>KLOC: </b>{{ result.0|floatformat:2 }}
                     </p>
                     <p>
-                        <b>Time Efficiency: </b>{{ result.3 }}%
+                        <b>Time Inefficiency: </b>{{ result.3 }}%
                     </p>
                     <p>
-                        <b>Persons Efficiency: </b>{{ result.4 }}%
+                        <b>Persons Inefficiency: </b>{{ result.4 }}%
                     </p>
                     <p style="color: red; text-align: center;">As per the results of basic cocomo model, the time
                         alloted on the project could have been improved by <b>{{ result.3 }}%</b>, the number of person
