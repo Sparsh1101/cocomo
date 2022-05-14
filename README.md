@@ -17,7 +17,7 @@ It is a web app that analysis the estimation accuracy for the time and number of
 
 You can head over to [https://cocomo.herokuapp.com](https://cocomo.herokuapp.com) to try out the app in your browser.  
   
-<u>Login Credentials :-</u>  
+**Login Credentials :-**  
 Username: cocomo  
 Password: django12
 
@@ -39,7 +39,7 @@ py manage.py makemigrations
 py manage.py migrate
 ```
 
-4. Create a super user to access django admin panel
+4. Create a super user to access the app
 
 ```bash
 py manage.py createsuperuser
