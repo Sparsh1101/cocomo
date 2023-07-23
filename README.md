@@ -1,6 +1,6 @@
 # Cocomo
 
-This is a project made by [Kevin Joshi](https://github.com/KevinJ-hub), [Kaushal Binjola](https://github.com/KaushalBinjola), [Sparsh Gupta](https://github.com/Sparsh1101) & [Hardik Jain](https://github.com/hardikjain1708).  
+This is a project made by [Sparsh Gupta](https://github.com/Sparsh1101), [Kevin Joshi](https://github.com/KevinJ-hub), [Kaushal Binjola](https://github.com/KaushalBinjola) & [Hardik Jain](https://github.com/hardikjain1708).  
 Database used is PostgreSQL as well and various dependencies like [Django Crispy Forms](https://django-crispy-forms.readthedocs.io/en/latest/) have been used.  
 It is a web app that analysis the estimation accuracy for the time and number of people assigned on the project based on the Cocomo Basic Model.  
 
