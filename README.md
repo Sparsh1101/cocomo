@@ -6,7 +6,7 @@ It is a web app that analysis the estimation accuracy for the time and number of
 
 ## Tech Used
 
-- Python
+- Python 3.9
 - Django
 - PostgreSQL
 - Bootstrap5
@@ -15,7 +15,8 @@ It is a web app that analysis the estimation accuracy for the time and number of
 
 1. Clone the repository
 2. Create the env file using the env-sample file
-3. Run the following command from the root of the project
+3. Download "backports.zoneinfo" wheel file from https://www.lfd.uci.edu/~gohlke/pythonlibs/#backports.zoneinfo and run "pip instaall filename.whl"
+4. Run the following command from the root of the project
 
 ```bash
 pip install -r requirements.txt
