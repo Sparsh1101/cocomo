@@ -37,7 +37,7 @@ Macos & Linux- source bin/activate )
 ```
 
 5. Clone the repository
-6. Create the env file using the env-sample file
+6. Create the env file using the env-sample file (generate django secret key from https://djecrety.ir/)
 7. Run the following command from the root of the project, Download "backports.zoneinfo" wheel file from https://www.lfd.uci.edu/~gohlke/pythonlibs/#backports.zoneinfo and run "pip instaall filename.whl"
 
 ```bash
