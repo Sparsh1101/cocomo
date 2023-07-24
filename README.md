@@ -13,10 +13,32 @@ It is a web app that analysis the estimation accuracy for the time and number of
 
 ## Running this project  
 
-1. Clone the repository
-2. Create the env file using the env-sample file
-3. Download "backports.zoneinfo" wheel file from https://www.lfd.uci.edu/~gohlke/pythonlibs/#backports.zoneinfo and run "pip instaall filename.whl"
-4. Run the following command from the root of the project
+> **NOTE:** You can also skip the virtual environment steps (1-4)
+
+1. Install virtual env on your system
+```bash
+pip install virtualenv
+```
+
+2. Run the command to create a virtual environment in a folder
+```bash
+python -m venv {your virtual env name}
+```
+
+3. A folder named {your virtual env name} will be created, enter the folder. ( The folder should contain some files and folders created for the virtual environment )
+
+4. Now activate the virtual environment
+```bash
+Windows- .\Scripts\activate
+```
+
+```bash
+Macos & Linux- source bin/activate )
+```
+
+5. Clone the repository
+6. Create the env file using the env-sample file
+7. Run the following command from the root of the project, Download "backports.zoneinfo" wheel file from https://www.lfd.uci.edu/~gohlke/pythonlibs/#backports.zoneinfo and run "pip instaall filename.whl"
 
 ```bash
 pip install -r requirements.txt
@@ -30,19 +52,16 @@ py manage.py makemigrations
 py manage.py migrate
 ```
 
-4. Create a super user to access the app
+8. Create a super user to access the app
 
 ```bash
 py manage.py createsuperuser
 ```
 
-5. Run the server
-
+9. Run the server
 ```bash
 py manage.py runserver
 ```
-
-> **NOTE:** You can also create a virtual environment, activate it and follow the above steps.
 
 ## Images
 
